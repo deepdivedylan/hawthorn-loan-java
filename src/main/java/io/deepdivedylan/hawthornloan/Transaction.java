@@ -8,8 +8,9 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Formatter;
+import java.util.Objects;
 
-public class Transaction {
+public class Transaction implements Comparable<Transaction> {
     private String transactionId;
     private double transactionAmount;
     private String transactionComment;
@@ -99,5 +100,30 @@ public class Transaction {
             formatter.format("%02x", hmacByte);
         }
         transactionId = formatter.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction that = (Transaction) o;
+        return Double.compare(that.transactionAmount, transactionAmount) == 0 &&
+                transactionId.equals(that.transactionId) &&
+                transactionComment.equals(that.transactionComment) &&
+                transactionDate.equals(that.transactionDate) &&
+                transactionType == that.transactionType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(transactionId, transactionAmount, transactionComment, transactionDate, transactionType);
+    }
+
+    @Override
+    public int compareTo(Transaction that) {
+        if (!this.transactionDate.equals(that.transactionDate)) {
+            return this.transactionDate.compareTo(that.transactionDate);
+        }
+        return Double.compare(this.transactionAmount, that.transactionAmount);
     }
 }

@@ -5,6 +5,7 @@ import org.apache.commons.csv.CSVRecord;
 
 import java.io.FileReader;
 import java.io.Reader;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class TransactionRegister {
                 String transactionType = csvRecord.get(5);
                 transactions.add(new Transaction(transactionAmount, transactionComment, transactionDate, transactionType));
             }
+            Collections.sort(transactions);
         } catch (Exception exception) {
             System.err.println("Exception: " + exception.getMessage());
             exception.printStackTrace();
