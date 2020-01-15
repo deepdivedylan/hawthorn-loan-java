@@ -38,6 +38,7 @@ public class TransactionRegister {
             }
         } catch (Exception exception) {
             System.err.println("Exception: " + exception.getMessage());
+            exception.printStackTrace();
         }
     }
 }

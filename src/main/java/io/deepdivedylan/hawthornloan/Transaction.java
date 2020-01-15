@@ -66,7 +66,7 @@ public class Transaction {
     }
 
     private void setTransactionDate(String newTransactionDate) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/d/yyyy");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/d/yy");
         transactionDate = LocalDate.parse(newTransactionDate, dateTimeFormatter);
     }
 
