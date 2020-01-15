@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TransactionRegister {
     List<Transaction> transactions;
@@ -42,5 +43,35 @@ public class TransactionRegister {
             System.err.println("Exception: " + exception.getMessage());
             exception.printStackTrace();
         }
+    }
+
+    public double sumAllTransactions() {
+        return sumTransactions(transactions);
+    }
+
+    public double sumDylansTransactions() {
+        List<Transaction> dylansTransactions = transactions.stream().filter(TransactionRegister::transactionBelongsToDylan).collect(Collectors.toList());
+        return sumTransactions(dylansTransactions);
+    }
+
+    public double sumLanesTransactions() {
+        List<Transaction> lanesTransactions = transactions.stream().filter(TransactionRegister::transactionBelongsToLane).collect(Collectors.toList());
+        return sumTransactions(lanesTransactions);
+    }
+
+    private double sumTransactions(List<Transaction> transactionList) {
+        double sum = 0.0;
+        for (Transaction transaction : transactionList) {
+            sum = sum + (transaction.getTransactionAmount() * transaction.getTransactionType().getMultiplier());
+        }
+        return sum;
+    }
+
+    public static boolean transactionBelongsToDylan(Transaction transaction) {
+        return transaction.getTransactionComment().contains("Principal Payment") || transaction.getTransactionComment().contains("Automatic Princ Transfer");
+    }
+
+    public static boolean transactionBelongsToLane(Transaction transaction) {
+        return transaction.getTransactionComment().equals("Capitalized Finance Charge Payment");
     }
 }
