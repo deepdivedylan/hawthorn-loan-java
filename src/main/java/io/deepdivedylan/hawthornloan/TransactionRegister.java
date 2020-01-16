@@ -17,6 +17,10 @@ public class TransactionRegister {
         transactions = new LinkedList<Transaction>();
     }
 
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
     public void importFromCSV(String filename) {
         /**
          * row map from Hawthorn Bank:
